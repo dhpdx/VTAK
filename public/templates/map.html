@@ -15,7 +15,13 @@
   height: 600;
 }
 </style>
-<div id="map">
+<div style="margin-top: 50px" class="row">
+  <div class="col-md-12" style="text-align: center">
+    <button class="btn btn-large" ng-click="getTweets()" style="color: green">Get Tweets!</button>
+    <button class="btn btn-large" ng-click="stopTweets()" style="color: tomato">Stop!!</button>
+  </div>
+
+<div style="text-align: center" id="map">
 <!-- <script>
 Heat.getTweets(tweets => {
 	console.log(tweets);
