@@ -8,17 +8,34 @@ angular.module('sentimently.heat', [])
 	resolve(Heat.initializeMap());
 	});
 	var socket = io();
-
 	init.then(function() {
-		console.log('map up')
-			socket.emit('needTweets', 'needTweets')
-			socket.on('tweet', tweet => {
-				tweets.push(tweet[1]);
-				setTimeout(function() {
+		console.log('map loaded');
+	})
+
+	$scope.getTweets = function() {
+		socket.emit('needTweets', 'needTweets')
+		socket.on('tweet', tweet => {
+			tweets.push(tweet[1]);
+			setInterval(function() {
 				Heat.updateMap(tweets);
-		},1000)		
-			});
-	});
+			}, 1000);
+		})
+	}
+
+	$scope.stopTweets = function() {
+		socket.emit('stop', 'stop');
+	}
+
+	// init.then(function() {
+	// 	console.log('map up')
+	// 		socket.emit('needTweets', 'needTweets')
+	// 		socket.on('tweet', tweet => {
+	// 			tweets.push(tweet[1]);
+	// 			setTimeout(function() {
+	// 			Heat.updateMap(tweets);
+	// 	},1000)		
+	// 		});
+	// });
 })
 
 

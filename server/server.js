@@ -33,44 +33,52 @@ var client = new Twitter({
 // Initialize express
 // var app = express();
 // console.log('io from server: ', io)
+var killIt = false;
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('needTweets', function(socket) {
+  	killIt = false;
   	
   	//mapquest
   	var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})  	
   		stream.on('data', event => {
-  			console.log('data')
-				if (event.user) {
-				var propertiesObject = { key: envVars.mapquest, location: event.user.location };
-				request.get({
-					url: 'http://www.mapquestapi.com/geocoding/v1/address',
-					'Content-Type': 'application/json',
-					qs: propertiesObject
-					}, function(err, resp, body) {
-						console.log('err!!!! ', err)
-						if (body) {
-						var responseObj = JSON.parse(body)
-							if (responseObj) {
-								if (responseObj.results[0]) {
-									if (responseObj.results[0].locations[0]) {
-										var newTweet = [event.text, [responseObj.results[0].locations[0].latLng.lng, responseObj.results[0].locations[0].latLng.lat ]];
-										console.log('sending tweet')
-										io.emit('tweet', newTweet);
+  			if (killIt) {
+  				stream.destroy();
+  				console.log('killed it')
+  			}
+  			else {
+	  			console.log('data')
+					if (event.user) {
+					var propertiesObject = { key: envVars.mapquest, location: event.user.location };
+					request.get({
+						url: 'http://www.mapquestapi.com/geocoding/v1/address',
+						'Content-Type': 'application/json',
+						qs: propertiesObject
+						}, function(err, resp, body) {
+							console.log('err!!!! ', err)
+							if (body) {
+							var responseObj = JSON.parse(body)
+								if (responseObj) {
+									if (responseObj.results[0]) {
+										if (responseObj.results[0].locations[0]) {
+											var newTweet = [event.text, [responseObj.results[0].locations[0].latLng.lng, responseObj.results[0].locations[0].latLng.lat ]];
+											console.log('sending tweet')
+											io.emit('tweet', newTweet);
+										}
 									}
 								}
 							}
-						}
-					})
-				} else {
+						})
+					} else {
 					console.log('no user info')	
+					}
 				}	
 			})
+		  stream.on('stop', function() {
+	  	console.log('destroying')
+	  	killIt = true;
+  		})		
 		});
-  socket.on('stop', function() {
-  	console.log('destroying')
-  	stream.destroy();
-  })
 })
   	//google
   	// var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})
