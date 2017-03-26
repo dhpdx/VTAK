@@ -11,13 +11,13 @@ var request = require('request');
 
 
 
-// var process.env = require('../env.json');
+var envVars = require('../env.json');
 
 var client = new Twitter({
-	consumer_key: process.env.consumer_key,
-	consumer_secret: process.env.consumer_secret,
-  access_token_key: process.env.access_token_key,
-  access_token_secret: process.env.access_token_secret
+	consumer_key: envVars.consumer_key,
+	consumer_secret: envVars.consumer_secret,
+  access_token_key: envVars.access_token_key,
+  access_token_secret: envVars.access_token_secret
 });
 
 //fakingitfordemo
@@ -49,7 +49,7 @@ io.on('connection', function(socket){
   			else {
 	  			console.log('data')
 					if (event.user) {
-					var propertiesObject = { key: process.env.mapquest, location: event.user.location };
+					var propertiesObject = { key: envVars.mapquest, location: event.user.location };
 					request.get({
 						url: 'http://www.mapquestapi.com/geocoding/v1/address',
 						'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ io.on('connection', function(socket){
 
 
 // make connection to mongoose database
-var url = process.env.mlab_url;
+var url = envVars.mlab_url;
 mongoose.connect(`${url}`).then(
   () => { console.log('mongoose connected!')},
   err => { console.log('mongoose connection error!', err) }
@@ -132,7 +132,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-var port = process.env.PORT || 8222;
+var port = envVars.PORT || 8222;
 
 http.listen(port, function() {
   console.log(`\n\nlistening on port: ${port}`);
