@@ -8,6 +8,8 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var Twitter = require('twitter');
 var request = require('request');
+require('dotenv').config();
+console.log('++++++++++++++++++++++ ', process.env.PORT)
 
 require('dotenv').config()
 

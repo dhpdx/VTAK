@@ -1,9 +1,19 @@
 var watson = require('watson-developer-cloud');
+<<<<<<< HEAD
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
 
   username: process.env.WATSON_USERNAME,
   password: process.env.WATSON_PASSWORD,
+=======
+// console.log('envVars.watson_username', envVars.watson_username); // to test that the env variables are exporting
+
+// Below functions required per IBM documentation
+var tone_analyzer = watson.tone_analyzer({
+
+  username: process.env.watson_username,
+  password: process.env.watson_password,
+>>>>>>> feat(environment variables): add .env file
   version: 'v3',
   version_date: '2016-05-19'
 });

@@ -6,6 +6,7 @@ var findAllSearches = Q.nbind(TweetModel.find, TweetModel);
 var findOne = Q.nbind(TweetModel.findOne, TweetModel);
 var saveASearch = Q.nbind(TweetModel.create, TweetModel);
 var empty = Q.nbind(TweetModel.remove, TweetModel);
+require('dotenv').config();
 
 module.exports = {
   saveToDB: function(resultsObject) {
