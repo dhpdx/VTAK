@@ -23,6 +23,7 @@ angular.module('sentimently.heat', [])
 	}
 
 	$scope.stopTweets = function() {
+		console.log('stopping')
 		socket.emit('stop', 'stop');
 	}
 
@@ -102,7 +103,6 @@ var initializeMap = function() {
 	  texas = [-97.50, 25.87] 
 
 	var updateMap = function(tweetStream) {
-		console.log('update with: ', tweetStream)
 		var width = 960;
 		var height = 600;
 	  // seattle = [-122.490402, 47.60];
