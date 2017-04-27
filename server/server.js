@@ -132,10 +132,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-var port = envVars.PORT || 8222;
 
-http.listen(port, function() {
-  console.log(`\n\nlistening on port: ${port}`);
+const server = app.listen(envVars.PORT || 8222, () => {
+  const host = server.address().address;
+  const port = server.address().port;
+  console.log('Listening at http://%s:%s', host, port);
 });
 
 // Hook up routes
