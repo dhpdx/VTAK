@@ -133,10 +133,10 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 
-const server = app.listen(envVars.PORT || 8222, () => {
-  const host = server.address().address;
-  const port = server.address().port;
-  console.log('Listening at http://%s:%s', host, port);
+var port = envVars.PORT || 80;
+
+http.listen(port, function() {
+  console.log(`\n\nlistening on port: ${port}`);
 });
 
 // Hook up routes
