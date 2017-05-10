@@ -1,5 +1,4 @@
 var watson = require('watson-developer-cloud');
-var envVars = require('../../env.json');
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
 

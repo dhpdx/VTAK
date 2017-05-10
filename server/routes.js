@@ -7,7 +7,6 @@ var Tweet = require('./controllers/dbController.js');
 var stream = require('express-stream');
 var TweetStream = require('./config/streamingTwitter')
 var Twitter = require('twitter');
-var env = require('../env.json');
 var request = require('request');
 var io = require('./server.js');
 

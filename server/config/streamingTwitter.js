@@ -1,6 +1,5 @@
 var Twitter = require('twitter');
 var request = require('request');
-var env = require('../../env.json');
 var socket = require('../server.js');
 
 
@@ -42,7 +41,7 @@ var getTweets = function(callback) {
 						}
 				});
 			} else {
-				console.log('no user info')		
+				console.log('no user info')
 			};
 	});
 }
@@ -53,5 +52,3 @@ var getTweets = function(callback) {
 module.exports = {
 	getTweets
 }
-
-
