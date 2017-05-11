@@ -1,30 +1,20 @@
 var Twitter = require('twitter');
 var request = require('request');
-var env = require('../../env.json');
 var socket = require('../server.js');
 
 
 var client = new Twitter({
-	consumer_key: env.consumer_key,
-	consumer_secret: env.consumer_secret,
-  access_token_key: env.access_token_key,
-  access_token_secret: env.access_token_secret
+	consumer_key: process.env.CONSUMER_KEY,
+	consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
 var params = {screen_name: 'danrhendrix'};
-// client.get('statuses/user_timeline', params, function(error, tweets, response) {
-//   if (!error) {
-//     console.log(tweets);
-//   }
-// });
-// console.log(socket)
-  // socket.on('needTweets', function(socket) {
-  // 	// io.emit('tweet', [-74,41])
-  // 	io.emit('tweet', 'hi')
-  // })
+
 var getTweets = function(callback) {
 	var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})
-	// var stream = client.stream('statuses/sample.json')
+
 	var tweetStream = [];
 	var results = [];
 	stream.on('data', event => {
@@ -42,16 +32,12 @@ var getTweets = function(callback) {
 						}
 				});
 			} else {
-				console.log('no user info')		
+				console.log('no user info')
 			};
 	});
 }
 
 
-
-
 module.exports = {
 	getTweets
 }
-
-

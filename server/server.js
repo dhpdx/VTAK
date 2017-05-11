@@ -9,38 +9,23 @@ var mongoose = require('mongoose');
 var Twitter = require('twitter');
 var request = require('request');
 
-
-
-var envVars = require('../env.json');
+require('dotenv').config()
 
 var client = new Twitter({
-	consumer_key: envVars.consumer_key,
-	consumer_secret: envVars.consumer_secret,
-  access_token_key: envVars.access_token_key,
-  access_token_secret: envVars.access_token_secret
+	consumer_key: process.env.CONSUMER_KEY,
+	consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-//fakingitfordemo
-// var longs = [];
-// for(var i = -122; i < -69; i++){
-// 	longs.push(i);
-// }
-// var lats = [];
-// for(var i = 26; i < 48; i++) {
-// 	lats.push(i);
-// }
-
-// Initialize express
-// var app = express();
-// console.log('io from server: ', io)
 var killIt = false;
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('needTweets', function(socket) {
   	killIt = false;
-  	
+
   	//mapquest
-  	var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})  	
+  	var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})
   		stream.on('data', event => {
   			if (killIt) {
   				stream.destroy();
@@ -49,7 +34,7 @@ io.on('connection', function(socket){
   			else {
 	  			console.log('data')
 					if (event.user) {
-					var propertiesObject = { key: envVars.mapquest, location: event.user.location };
+					var propertiesObject = { key: process.env.MAPQUEST, location: event.user.location };
 					request.get({
 						url: 'http://www.mapquestapi.com/geocoding/v1/address',
 						'Content-Type': 'application/json',
@@ -70,14 +55,14 @@ io.on('connection', function(socket){
 							}
 						})
 					} else {
-					console.log('no user info')	
+					console.log('no user info')
 					}
-				}	
+				}
 			})
 		  stream.on('stop', function() {
 	  	console.log('destroying')
 	  	killIt = true;
-  		})		
+  		})
 		});
 })
   	//google
@@ -99,24 +84,24 @@ io.on('connection', function(socket){
 			// 				console.log('sending tweet')
 			// 				io.emit('tweet', newTweet)
 		// 	} else {
-		// 		console.log('no user info')		
+		// 		console.log('no user info')
 		// 	}
 		// });
   // })
 
-//dummy data 
+//dummy data
 		// setInterval(function() {
 		// 	var randomLong = longs[Math.floor(Math.random() * longs.length)];
 		// 	var randomLat = lats[Math.floor(Math.random() * lats.length)];
 		// 	io.emit('tweet', [randomLong, randomLat])
 		// }, 5000)
-// 	})  
+// 	})
 // });
 
 
 
 // make connection to mongoose database
-var url = envVars.mlab_url;
+var url = process.env.MLAB_URL;
 mongoose.connect(`${url}`).then(
   () => { console.log('mongoose connected!')},
   err => { console.log('mongoose connection error!', err) }
@@ -132,7 +117,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-var port = process.env.PORT || envVars.PORT || 8222;
+
+var port = process.env.PORT || 80;
 
 http.listen(port, function() {
   console.log(`\n\nlistening on port: ${port}`);
@@ -141,5 +127,4 @@ http.listen(port, function() {
 // Hook up routes
 require('./routes.js')(app, express);
 
-module.exports = io 
-
+module.exports = io

@@ -4,7 +4,7 @@
   "description": "linguistic analysis to detect emotional tones in tweets",
   "repository": {
     "type": "git",
-    "url": "https://github.com/V-T-A-K/VTAK.git"
+    "url": "https://github.com/Legacy-WatsonDRC/VTAK.git"
   },
   "main": "server/server.js",
   "scripts": {
@@ -28,7 +28,6 @@
     "http": "0.0.0",
     "mongoose": "^4.9.0",
     "morgan": "^1.8.1",
-    "node-sass": "^4.5.1",
     "q": "^1.4.1",
     "socket.io": "^1.7.3",
     "twitter": "^1.7.0",
