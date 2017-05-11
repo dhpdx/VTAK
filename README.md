@@ -6,7 +6,7 @@
 >
 > Wouldn't you love it if you could run someone's tweets through Watson and find out how their expressed sentiments will ACTUALLY be perceived?
 >
-> Enter [*Sentiment.ly!*](http://sample-env.zhtjbs6sdb.us-west-2.elasticbeanstalk.com/)
+> Enter [*Sentiment.ly!*](https://sentimentlytweet.herokuapp.com//)
 >
 ***
 
@@ -15,7 +15,8 @@
 
   - __Product Owner__: [John Packel](https://twitter.com/jpackel)
   - __Scrum Master__: [Todd MacIntyre](https://twitter.com/toddmacintyre)
-  - __Development Team Members__: [Andrew Fechner](https://twitter.com/AndrewFechner), [Aamir Yousuf](https://twitter.com/whyaamir), [Danny Hendrix](http://www.github.com/dhpdx), [Rich Serdici](https://github.com/ralexanderdesign), [Cameron Dunn](https://github.com/camdunne)
+  - __Development Team Members__: [Cameron Dunne](https://twitter.com/cameronadunne), [Andrew Fechner](https://twitter.com/AndrewFechner), [Danny Hendrix](https://github.com/dhpdx), [Rich Serdici](https://github.com/ralexanderdesign), [Aamir Yousuf](https://twitter.com/whyaamir)
+
 
 
 ## Table of Contents
@@ -74,4 +75,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ![See Sentiment.ly tech stack file above, since it apparently doesn't feel like loading here today](
 https://cloud.githubusercontent.com/assets/19581802/24165435/c010acae-0e46-11e7-86bc-8379c48e81d1.png)
-

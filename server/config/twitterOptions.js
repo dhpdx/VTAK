@@ -1,6 +1,5 @@
-var envVars = require('../../env.json');
 var streaming = require('./streamingTwitter.js');
-var bearer_token = {"token_type":"bearer","access_token":"AAAAAAAAAAAAAAAAAAAAAN0yzgAAAAAAuA1ty4YD%2BOQX6jCnVa%2Fwk%2FnfNhI%3DpF9GEBB3hTF617KlRVcJFPX8naMLQZBqgD2tiDTU2zbOJGhfCW"}
+
 module.exports = {
     options: {
         method: 'GET',
@@ -12,7 +11,7 @@ module.exports = {
         },
         json: true,
         headers: {
-            "Authorization": "Bearer " + bearer_token["access_token"]
+            "Authorization": "Bearer " + process.env.BEARER_TOKEN
         }
     }
 }
