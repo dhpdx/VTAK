@@ -15,7 +15,7 @@
 
   - __Product Owner__: [John Packel](https://twitter.com/jpackel)
   - __Scrum Master__: [Todd MacIntyre](https://twitter.com/toddmacintyre)
-  - __Development Team Members__: [Cameron Dunne](https://twitter.com/cameronadunne),[Andrew Fechner](https://twitter.com/AndrewFechner), [Danny Hendrix], [Rich Serdici], [Aamir Yousuf](https://twitter.com/whyaamir)
+  - __Development Team Members__: [Cameron Dunne](https://twitter.com/cameronadunne),[Andrew Fechner](https://twitter.com/AndrewFechner), Danny Hendrix, Rich Serdici, [Aamir Yousuf](https://twitter.com/whyaamir)
 
 
 ## Table of Contents
