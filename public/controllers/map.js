@@ -5,7 +5,7 @@ angular.module('sentimently.heat', [])
 .controller('HeatController', function($scope, Heat) {
 	var tweets = [[-74,41]];
 	var init = new Promise(function(resolve, reject) {
-	resolve(Heat.initializeMap());
+		resolve(Heat.initializeMap());
 	});
 	var socket = io();
 	init.then(function() {

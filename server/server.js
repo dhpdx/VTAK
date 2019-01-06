@@ -16,60 +16,56 @@ require('dotenv').config()
 var client = new Twitter({
 	consumer_key: process.env.CONSUMER_KEY,
 	consumer_secret: process.env.CONSUMER_SECRET,
-  access_token_key: process.env.ACCESS_TOKEN_KEY,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+  	access_token_key: process.env.ACCESS_TOKEN_KEY,
+  	access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
 var killIt = false;
 
 io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('needTweets', function(socket) {
-  	killIt = false;
-
-  	var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})
-  		stream.on('data', event => {
-  			if (killIt) {
-  				stream.destroy();
-  				console.log('killed it')
-  			}
-  			else {
-					if (event.user) {
-					var propertiesObject = { key: process.env.MAPQUEST, location: event.user.location };
-					request.get({
-						url: 'http://www.mapquestapi.com/geocoding/v1/address',
-						'Content-Type': 'application/json',
-						qs: propertiesObject
-						}, function(err, resp, body) {
-							if(err) {console.log('err!!!! ', err)};
-							if (body) {
-							var responseObj = JSON.parse(body)
-								if (responseObj) {
-									if (responseObj.results[0]) {
-										if (responseObj.results[0].locations[0]) {
-											var newTweet = [event.text, [responseObj.results[0].locations[0].latLng.lng, responseObj.results[0].locations[0].latLng.lat ]];
-											// console.log('sending tweet')
-											io.emit('tweet', newTweet);
-										}
-									}
-								}
-							}
-						})
-					} else {
-					console.log('no user info')
-					}
-				}
-			})
-		  stream.on('stop', function() {
-	  	console.log('destroying')
-	  	killIt = true;
-  		})
-		});
-	})
-  socket.on('stop', function() {
-	console.log('killing it');
-	killIt = true;	
-  });	
+    socket.on('needTweets', function(socket) {
+        killIt = false;
+        debugger;
+        var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'});
+        stream.on('data', event => {
+            if (killIt) {
+                stream.destroy();
+                killIt = false;
+            } else {
+                if (event.user) {
+                var propertiesObject = { key: process.env.MAPQUEST, location: event.user.location };
+                request.get({
+                    url: 'http://www.mapquestapi.com/geocoding/v1/address',
+                    'Content-Type': 'application/json',
+                    qs: propertiesObject
+                    }, function(err, resp, body) {
+                        if(err) {console.log('err!!!! ', err)};
+                        if (body) {
+                        var responseObj = JSON.parse(body)
+                            if (responseObj) {
+                                if (responseObj.results[0]) {
+                                    if (responseObj.results[0].locations[0]) {
+                                        var newTweet = [event.text, [responseObj.results[0].locations[0].latLng.lng, responseObj.results[0].locations[0].latLng.lat ]];
+                                        io.emit('tweet', newTweet);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+                console.log('no user info')
+                }
+            }
+        })
+        stream.on('stop', function() {
+            console.log('destroying')
+            killIt = true;
+        });
+    });
+    socket.on('stop', function() {
+        console.log('killing it');
+        killIt = true;	
+    });
 });
   	//google
   	// var stream = client.stream('statuses/filter' , {locations: '-122, 26, -68, 47'})
@@ -108,11 +104,12 @@ io.on('connection', function(socket){
 
 // make connection to mongoose database
 var url = process.env.MLAB_URL;
-mongoose.connect(`${url}`).then(
-  () => { console.log('mongoose connected!')},
-  err => { console.log('mongoose connection error!', err) }
-);
-
+mongoose.connect(`${url}`).then(() => {
+    console.log('mongoose connected!')
+    },
+    err => { 
+        console.log('mongoose connection error!', err)
+    });
 // use middleware
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true})); // in case we need this later (from Shortly-Angular sprint)
